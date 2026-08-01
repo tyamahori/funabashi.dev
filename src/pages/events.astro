@@ -4,7 +4,7 @@ import { CONNPASS_URL } from '../consts';
 import { getEvents, formatDateLabel, formatDateShort } from '../lib/connpass';
 
 // ビルド時にconnpassから取得(失敗時は events-fallback.json)。鮮度は日次再ビルドで担保する
-const { upcoming, past } = await getEvents();
+const { upcoming, past, live } = await getEvents();
 const nextEvent = upcoming[0];
 ---
 
@@ -50,4 +50,5 @@ const nextEvent = upcoming[0];
     勉強会はLT中心で、初登壇の練習の場としてもどうぞ。
     聞くだけの参加も歓迎です。
   </p>
+  <span hidden data-events-source={live ? 'connpass-live' : 'fallback'}></span>
 </Base>
