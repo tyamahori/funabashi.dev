@@ -71,3 +71,9 @@ GitHub リポジトリ連携で main への push が本番反映される(現行
 - 依存導入は bun.lock により自動で bun(CFデフォルト版)。バージョンのピン留めは**意図的にしていない**(2026-08-02決定): 再現性は bun.lock が担保しており、bun は CF にバージョンファイル非対応(`BUN_VERSION` 環境変数のみ=ダッシュボード管理になり忘れるため不採用)。`packageManager` フィールド方式も corepack 非対応でビルド失敗のため revert 済み。将来 bun の大型更新でビルドが壊れたときだけ `BUN_VERSION` を設定する
 - 2026-08-01 にビルド設定の不整合で本番が一時 VitePress 誤ビルドになった事故あり(経緯は bot リポジトリ docs/ops/ のセッション日誌)。**ビルド設定を変えたら必ず本番の実配信を確認すること**
 - pages.dev のブランチプレビューURLは Cloudflare Access 保護付きで閲覧可(Bulk Redirect の Include subdomains を OFF にして復活済み)
+
+## SEO
+
+サイトマップ(`sitemap-index.xml`)・robots.txt・RSS・記事の構造化データ(BlogPosting)を実装済み(2026-08-02)。
+
+Google Search Console は **tyamahori@higafuna.jp** のアカウントでプロパティ登録し、`https://funabashi.dev/sitemap-index.xml` を送信済み(2026-08-02)。検索パフォーマンスの確認はこのアカウントで。
