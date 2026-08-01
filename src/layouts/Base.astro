@@ -4,9 +4,10 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 interface Props {
   title?: string;
   description?: string;
+  ogType?: 'website' | 'article';
 }
 
-const { title, description = SITE_DESCRIPTION } = Astro.props;
+const { title, description = SITE_DESCRIPTION, ogType = 'website' } = Astro.props;
 const pageTitle = title ? `${title} | ${SITE_TITLE}` : SITE_TITLE;
 const ogImage = new URL('/ogp.jpg', Astro.site);
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
@@ -21,14 +22,24 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
     <meta name="description" content={description} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="654" />
+    <meta property="og:site_name" content={SITE_TITLE} />
+    <meta property="og:locale" content="ja_JP" />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="canonical" href={canonicalUrl} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="ふなデブくん新聞部"
+      href={new URL('/rss.xml', Astro.site)}
+    />
+    <slot name="head" />
   </head>
   <body>
     <header class="site-header">
@@ -48,6 +59,7 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
     <footer class="site-footer">
       <p class="mono">Funabashi.dev — 船橋を中心としたIT/Web系開発者コミュニティ(2021年〜)</p>
       <p>マスコット: <a href="/funadebu">ふなデブくん</a> 🍐(枝がFの梨、5年越しの採用)</p>
+      <p class="mono"><a href="/rss.xml">RSS</a> — 新聞部の更新を購読できます</p>
     </footer>
   </body>
 </html>
