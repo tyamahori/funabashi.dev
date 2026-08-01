@@ -24,7 +24,7 @@ const pageTitle = title ? `${title} | ${SITE_TITLE}` : SITE_TITLE;
   </head>
   <body>
     <header class="site-header">
-      <a class="brand" href="/">Funabashi<span class="brand-dot">.dev</span></a>
+      <a class="brand" href="/">funabashi<span class="brand-accent">.dev</span><span class="cursor" aria-hidden="true"></span></a>
       <nav>
         <a href="/about">About</a>
         <a href="/activities">活動</a>
@@ -37,38 +37,38 @@ const pageTitle = title ? `${title} | ${SITE_TITLE}` : SITE_TITLE;
       <slot />
     </main>
     <footer class="site-footer">
-      <p>Funabashi.dev — 船橋を中心としたIT/Web系開発者コミュニティ(2021年〜)</p>
-      <p class="footer-note">マスコット: ふなデブくん 🍐(枝がFの梨、5年越しの採用)</p>
+      <p class="mono">funabashi.dev — 船橋を中心としたIT/Web系開発者コミュニティ(2021年〜)</p>
+      <p>マスコット: ふなデブくん 🍐(枝がFの梨、5年越しの採用)</p>
     </footer>
   </body>
 </html>
 
 <style is:global>
-  /* パレットは「ふなでぶにゅーす」紙面と同系(紙・墨・金・葉)。新聞部との連続性を持たせる */
+  /* テック系ダークファースト。アクセントは梨のライム×金(ふなデブくん由来のブランド色) */
   :root {
-    --paper: #f5f4ec;
-    --surface: #fdfcf7;
-    --ink: #22261b;
-    --muted: #6d7260;
-    --gold: #a8821f;
-    --gold-bg: rgba(168, 130, 31, 0.08);
-    --leaf: #55742f;
-    --leaf-ink: #3f5723;
-    --stamp: #ba3d2c;
-    --hairline: rgba(34, 38, 27, 0.22);
+    --bg: #0e120e;
+    --surface: #151a15;
+    --surface-2: #1b221b;
+    --ink: #e9eee6;
+    --muted: #97a292;
+    --accent: #a3e635;
+    --accent-2: #eab308;
+    --accent-ink: #0e120e;
+    --hairline: rgba(233, 238, 230, 0.12);
+    --accent-glow: rgba(163, 230, 53, 0.12);
   }
-  @media (prefers-color-scheme: dark) {
+  @media (prefers-color-scheme: light) {
     :root {
-      --paper: #16180f;
-      --surface: #1e2115;
-      --ink: #e6e3d2;
-      --muted: #9ba089;
-      --gold: #d0ab4c;
-      --gold-bg: rgba(208, 171, 76, 0.1);
-      --leaf: #93b063;
-      --leaf-ink: #a8c47a;
-      --stamp: #de6a55;
-      --hairline: rgba(230, 227, 210, 0.22);
+      --bg: #fafaf6;
+      --surface: #ffffff;
+      --surface-2: #f2f4ee;
+      --ink: #1b211a;
+      --muted: #5d675a;
+      --accent: #4d7c0f;
+      --accent-2: #a16207;
+      --accent-ink: #ffffff;
+      --hairline: rgba(27, 33, 26, 0.14);
+      --accent-glow: rgba(77, 124, 15, 0.08);
     }
   }
 
@@ -81,109 +81,163 @@ const pageTitle = title ? `${title} | ${SITE_TITLE}` : SITE_TITLE;
   body {
     margin: 0;
     color: var(--ink);
-    background: var(--paper);
+    background: var(--bg);
     font-family: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', Meiryo, sans-serif;
     line-height: 1.85;
   }
+  .mono,
+  .site-header .brand,
+  .eyebrow {
+    font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  }
+
   h1 {
-    font-size: 1.7rem;
-    line-height: 1.5;
+    font-size: 1.75rem;
+    line-height: 1.45;
     margin: 0 0 1rem;
+    letter-spacing: 0.01em;
   }
   h2 {
-    font-size: 1.25rem;
-    margin: 2.5rem 0 0.75rem;
-    padding-left: 0.6rem;
-    border-left: 4px solid var(--leaf);
+    font-size: 1.2rem;
+    margin: 3rem 0 0.75rem;
+  }
+  h2::before {
+    content: '# ';
+    color: var(--accent);
+    font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
   }
   a {
-    color: var(--leaf-ink);
+    color: var(--accent);
+  }
+  a:hover {
+    opacity: 0.85;
   }
 
   .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem 1.25rem;
     align-items: center;
-    padding: 0.9rem 1.5rem;
-    border-bottom: 2px solid var(--ink);
-    background: var(--surface);
+    padding: 0.85rem 1.5rem;
+    border-bottom: 1px solid var(--hairline);
+    background: color-mix(in srgb, var(--bg) 82%, transparent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
   }
   .site-header .brand {
     font-weight: 700;
-    font-size: 1.1rem;
+    font-size: 1rem;
     text-decoration: none;
     color: var(--ink);
     margin-right: auto;
+    display: inline-flex;
+    align-items: center;
   }
-  .brand-dot {
-    color: var(--leaf);
+  .brand-accent {
+    color: var(--accent);
+  }
+  .cursor {
+    display: inline-block;
+    width: 0.55em;
+    height: 1.1em;
+    margin-left: 0.18em;
+    background: var(--accent);
+    animation: blink 1.2s steps(2, start) infinite;
+  }
+  @keyframes blink {
+    to {
+      visibility: hidden;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cursor {
+      animation: none;
+    }
   }
   .site-header nav {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.25rem 1rem;
-    font-size: 0.95rem;
+    gap: 0.25rem 1.1rem;
+    font-size: 0.92rem;
   }
   .site-header nav a {
-    color: var(--ink);
+    color: var(--muted);
     text-decoration: none;
-    padding: 0.15rem 0.2rem;
+    padding: 0.15rem 0.1rem;
   }
   .site-header nav a:hover {
-    color: var(--leaf-ink);
+    color: var(--ink);
+    opacity: 1;
   }
   .nav-join {
+    color: var(--accent) !important;
     font-weight: 700;
-    color: var(--leaf-ink) !important;
   }
 
   main {
-    max-width: 46rem;
+    max-width: 48rem;
     margin: 0 auto;
-    padding: 2.25rem 1.25rem 4rem;
+    padding: 2.5rem 1.25rem 5rem;
   }
 
   .site-footer {
     border-top: 1px solid var(--hairline);
-    padding: 1.5rem;
+    padding: 1.75rem 1.5rem;
     color: var(--muted);
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     text-align: center;
   }
   .site-footer p {
-    margin: 0.2rem 0;
+    margin: 0.25rem 0;
+  }
+
+  .eyebrow {
+    color: var(--accent);
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+    margin: 0 0 0.5rem;
   }
 
   .cta-row {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.75rem;
-    margin: 1.5rem 0;
+    gap: 0.8rem;
+    margin: 1.75rem 0;
   }
   .cta {
     display: inline-block;
     padding: 0.65rem 1.5rem;
-    border-radius: 999px;
+    border-radius: 8px;
     text-decoration: none;
     font-weight: 700;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
   }
   .cta.primary {
-    background: var(--leaf);
-    color: #fff;
+    background: var(--accent);
+    color: var(--accent-ink);
+  }
+  .cta.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px var(--accent-glow);
+    opacity: 1;
   }
   .cta.secondary {
-    border: 2px solid var(--leaf);
-    color: var(--leaf-ink);
+    border: 1px solid var(--hairline);
+    color: var(--ink);
+    background: var(--surface);
   }
-  .cta.primary:hover,
   .cta.secondary:hover {
-    opacity: 0.85;
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    opacity: 1;
   }
 
   .card-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
     gap: 0.9rem;
     margin: 1.25rem 0;
     padding: 0;
@@ -192,23 +246,29 @@ const pageTitle = title ? `${title} | ${SITE_TITLE}` : SITE_TITLE;
   .card {
     background: var(--surface);
     border: 1px solid var(--hairline);
-    border-radius: 10px;
-    padding: 1rem 1.15rem;
+    border-radius: 12px;
+    padding: 1.05rem 1.2rem;
+    transition: transform 0.15s ease, border-color 0.15s ease;
+  }
+  .card:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent);
   }
   .card h3 {
     margin: 0 0 0.4rem;
-    font-size: 1.02rem;
+    font-size: 1rem;
   }
   .card p {
     margin: 0;
-    font-size: 0.92rem;
+    font-size: 0.9rem;
     color: var(--muted);
   }
 
   .notice {
-    background: var(--gold-bg);
-    border-left: 4px solid var(--gold);
-    padding: 0.8rem 1.1rem;
-    border-radius: 0 8px 8px 0;
+    background: var(--surface);
+    border: 1px solid var(--hairline);
+    border-left: 3px solid var(--accent);
+    padding: 0.85rem 1.15rem;
+    border-radius: 8px;
   }
 </style>

@@ -10,16 +10,24 @@ const latestNews = (await getCollection('news'))
 
 const memberTotal = stats.discordMembers + stats.connpassMembers;
 const statTiles = [
-  { label: '発足', value: `${stats.foundedYear}年`, note: '船橋の地元コミュニティとして' },
-  { label: 'メンバー(のべ)', value: `${memberTotal}人`, note: `Discord ${stats.discordMembers} + connpass ${stats.connpassMembers}` },
-  { label: 'イベント開催', value: `${stats.eventsHeld}回`, note: '勉強会から忘年会まで' },
-  { label: 'Discordチャンネル', value: `${stats.channelCount}`, note: '技術も麻雀もグルメも' },
+  { label: 'since', value: `${stats.foundedYear}`, note: '船橋の地元コミュニティとして' },
+  { label: 'members', value: `${memberTotal}`, note: `のべ人数(Discord ${stats.discordMembers} + connpass ${stats.connpassMembers})` },
+  { label: 'events', value: `${stats.eventsHeld}`, note: '勉強会から忘年会まで' },
+  { label: 'channels', value: `${stats.channelCount}`, note: '技術も麻雀もグルメも' },
 ];
 ---
 
 <Base>
   <section class="hero">
-    <h1>船橋で、ゆるく長くつながる<br />開発者コミュニティ</h1>
+    <a class="announce" href={stats.nextEvent.url}>
+      <span class="announce-tag">NEXT</span>
+      {stats.nextEvent.dateLabel} {stats.nextEvent.title} — 申込受付中 →
+    </a>
+    <p class="eyebrow">~/chiba/funabashi $ dev community</p>
+    <h1>
+      船橋で、ゆるく長くつながる<br />
+      <span class="grad">開発者コミュニティ</span>
+    </h1>
     <p>
       Funabashi.dev は船橋市を中心とした IT/Web 系開発者と関係者のコミュニティです。
       2021年の発足から、勉強会も雑談も、麻雀もボルダリングも、地元で続いています。
@@ -37,14 +45,14 @@ const statTiles = [
       {
         statTiles.map((s) => (
           <li class="stat-tile">
-            <span class="stat-label">{s.label}</span>
+            <span class="stat-label mono">{s.label}</span>
             <span class="stat-value">{s.value}</span>
             <span class="stat-note">{s.note}</span>
           </li>
         ))
       }
     </ul>
-    <p class="asof">{stats.asOf} 時点</p>
+    <p class="asof mono">last update: {stats.asOf}</p>
   </section>
 
   <section>
@@ -75,25 +83,14 @@ const statTiles = [
   </section>
 
   <section>
-    <h2>次回イベント</h2>
-    <div class="notice">
-      <p style="margin: 0;">
-        <strong>{stats.nextEvent.title}</strong><br />
-        {stats.nextEvent.dateLabel} — 申込は
-        <a href={stats.nextEvent.url}>connpass</a> から
-      </p>
-    </div>
-  </section>
-
-  <section>
     <h2>ふなデブくん新聞部の新着</h2>
     {
       latestNews.length > 0 ? (
-        <ul>
+        <ul class="news-list">
           {latestNews.map((entry) => (
             <li>
               <a href={`/news/${entry.id}`}>{entry.data.title}</a>
-              <small> — {NEWS_CATEGORIES[entry.data.category]}</small>
+              <small class="mono"> {NEWS_CATEGORIES[entry.data.category]}</small>
             </li>
           ))}
         </ul>
@@ -106,9 +103,43 @@ const statTiles = [
 </Base>
 
 <style>
-  .hero h1 {
-    font-size: 1.9rem;
+  .hero {
+    padding-top: 1rem;
+    background-image: radial-gradient(var(--accent-glow) 1px, transparent 1px);
+    background-size: 22px 22px;
   }
+  .announce {
+    display: inline-block;
+    font-size: 0.85rem;
+    text-decoration: none;
+    color: var(--ink);
+    border: 1px solid var(--hairline);
+    background: var(--surface);
+    border-radius: 999px;
+    padding: 0.3rem 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .announce:hover {
+    border-color: var(--accent);
+    opacity: 1;
+  }
+  .announce-tag {
+    color: var(--accent);
+    font-weight: 700;
+    font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+    font-size: 0.75rem;
+    margin-right: 0.5rem;
+  }
+  .hero h1 {
+    font-size: 2.1rem;
+  }
+  .grad {
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
   .stat-row {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
@@ -122,26 +153,34 @@ const statTiles = [
     flex-direction: column;
     background: var(--surface);
     border: 1px solid var(--hairline);
-    border-radius: 10px;
-    padding: 0.9rem 1rem;
+    border-radius: 12px;
+    padding: 0.95rem 1.05rem;
   }
   .stat-label {
-    font-size: 0.82rem;
-    color: var(--muted);
+    font-size: 0.78rem;
+    color: var(--accent);
+    letter-spacing: 0.06em;
   }
   .stat-value {
-    font-size: 1.7rem;
+    font-size: 2rem;
     font-weight: 600;
-    line-height: 1.35;
+    line-height: 1.3;
   }
   .stat-note {
     font-size: 0.78rem;
     color: var(--muted);
   }
   .asof {
-    font-size: 0.78rem;
+    font-size: 0.75rem;
     color: var(--muted);
     text-align: right;
     margin-top: 0.4rem;
+  }
+
+  .news-list {
+    padding-left: 1.2rem;
+  }
+  .news-list small {
+    color: var(--muted);
   }
 </style>
