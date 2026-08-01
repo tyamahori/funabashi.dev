@@ -3,26 +3,34 @@ import Base from '../layouts/Base.astro';
 import { getCollection } from 'astro:content';
 import { DISCORD_INVITE_URL, CONNPASS_URL, NEWS_CATEGORIES } from '../consts';
 import stats from '../data/stats.json';
+import { getEvents, formatDateLabel } from '../lib/connpass';
 
 const latestNews = (await getCollection('news'))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 3);
 
+const { upcoming, past } = await getEvents();
+const nextEvent = upcoming[0];
+
 const memberTotal = stats.discordMembers + stats.connpassMembers;
 const statTiles = [
   { label: 'since', value: `${stats.foundedYear}`, note: '船橋の地元コミュニティとして' },
   { label: 'members', value: `${memberTotal}`, note: `のべ人数(Discord ${stats.discordMembers} + connpass ${stats.connpassMembers})` },
-  { label: 'events', value: `${stats.eventsHeld}`, note: '勉強会から忘年会まで' },
+  { label: 'events', value: `${past.length}`, note: '勉強会から忘年会まで' },
   { label: 'channels', value: `${stats.channelCount}`, note: '技術も麻雀もグルメも' },
 ];
 ---
 
 <Base>
   <section class="hero">
-    <a class="announce" href={stats.nextEvent.url}>
-      <span class="announce-tag">NEXT</span>
-      {stats.nextEvent.dateLabel} {stats.nextEvent.title} — 申込受付中 →
-    </a>
+    {
+      nextEvent && (
+        <a class="announce" href={nextEvent.url}>
+          <span class="announce-tag">NEXT</span>
+          {formatDateLabel(nextEvent.start)} {nextEvent.title} — 申込受付中 →
+        </a>
+      )
+    }
     <p class="eyebrow">~/chiba/funabashi $ dev community</p>
     <h1>
       船橋で、ゆるく長くつながる<br />

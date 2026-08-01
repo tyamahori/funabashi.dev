@@ -1,0 +1,24 @@
+{
+  "_comment": "connpassビルド時取得の失敗時に使うスナップショット(2026-08-01実測)。過去分の時刻は正午JST近似",
+  "upcoming": [
+    {
+      "title": "大Funabashi.dev supported by KIKKAKE CREATION 2026",
+      "url": "https://funabashidev.connpass.com/event/398253/",
+      "start": "2026-09-12T04:30:00Z"
+    }
+  ],
+  "past": [
+    { "title": "【第06回】Funabashi.dev supported by KIKKAKE CREATION", "url": "https://funabashidev.connpass.com/event/382000/", "start": "2026-04-18T05:00:00Z" },
+    { "title": "Funabashi.dev 2025年忘年会", "url": "https://funabashidev.connpass.com/event/", "start": "2025-12-06T03:00:00Z" },
+    { "title": "【第05回】Funabashi.dev supported by KIKKAKE CREATION", "url": "https://funabashidev.connpass.com/event/", "start": "2025-12-06T02:00:00Z" },
+    { "title": "【第04回】Funabashi.dev supported by KIKKAKE CREATION", "url": "https://funabashidev.connpass.com/event/", "start": "2025-09-13T03:00:00Z" },
+    { "title": "【第3.1回】Funabashi.dev/ボルダリング回", "url": "https://funabashidev.connpass.com/event/", "start": "2025-06-14T03:00:00Z" },
+    { "title": "【第3回】Funabashi.dev supported by KIKKAKE CREATION", "url": "https://funabashidev.connpass.com/event/", "start": "2025-05-24T03:00:00Z" },
+    { "title": "【第2.5回】Funabashi.dev in 渋谷@キッカケクリエイション", "url": "https://funabashidev.connpass.com/event/", "start": "2025-03-15T03:00:00Z" },
+    { "title": "【2025.01.25懇親会】Funabashi.dev", "url": "https://funabashidev.connpass.com/event/", "start": "2025-01-25T04:00:00Z" },
+    { "title": "【第2回】Funabashi.dev supported by KIKKAKE CREATION", "url": "https://funabashidev.connpass.com/event/", "start": "2025-01-25T03:00:00Z" },
+    { "title": "【2024年忘年会】Funabashi.dev", "url": "https://funabashidev.connpass.com/event/", "start": "2024-12-14T03:00:00Z" },
+    { "title": "【2次会】Funabashi.dev", "url": "https://funabashidev.connpass.com/event/", "start": "2024-09-14T08:00:00Z" },
+    { "title": "【初参加歓迎】Funabashi.dev supported by KIKKAKE CREATION", "url": "https://funabashidev.connpass.com/event/", "start": "2024-09-14T03:00:00Z" }
+  ]
+}

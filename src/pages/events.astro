@@ -1,23 +1,11 @@
 ---
 import Base from '../layouts/Base.astro';
 import { CONNPASS_URL } from '../consts';
-import stats from '../data/stats.json';
+import { getEvents, formatDateLabel, formatDateShort } from '../lib/connpass';
 
-// 開催実績(connpassのタイトル表記のまま、2026-08-01実測)。フェーズ4でconnpass APIからのビルド時自動取得に置き換える
-const pastEvents = [
-  { date: '2026/04/18', title: '【第06回】Funabashi.dev supported by KIKKAKE CREATION' },
-  { date: '2025/12/06', title: 'Funabashi.dev 2025年忘年会' },
-  { date: '2025/12/06', title: '【第05回】Funabashi.dev supported by KIKKAKE CREATION' },
-  { date: '2025/09/13', title: '【第04回】Funabashi.dev supported by KIKKAKE CREATION' },
-  { date: '2025/06/14', title: '【第3.1回】Funabashi.dev/ボルダリング回' },
-  { date: '2025/05/24', title: '【第3回】Funabashi.dev supported by KIKKAKE CREATION' },
-  { date: '2025/03/15', title: '【第2.5回】Funabashi.dev in 渋谷@キッカケクリエイション' },
-  { date: '2025/01/25', title: '【2025.01.25懇親会】Funabashi.dev' },
-  { date: '2025/01/25', title: '【第2回】Funabashi.dev supported by KIKKAKE CREATION' },
-  { date: '2024/12/14', title: '【2024年忘年会】Funabashi.dev' },
-  { date: '2024/09/14', title: '【2次会】Funabashi.dev' },
-  { date: '2024/09/14', title: '【初参加歓迎】Funabashi.dev supported by KIKKAKE CREATION' },
-];
+// ビルド時にconnpassから取得(失敗時は events-fallback.json)。鮮度は日次再ビルドで担保する
+const { upcoming, past } = await getEvents();
+const nextEvent = upcoming[0];
 ---
 
 <Base title="イベント">
@@ -28,19 +16,28 @@ const pastEvents = [
   </p>
 
   <h2>次回</h2>
-  <div class="notice">
-    <p style="margin: 0;">
-      <strong>{stats.nextEvent.title}</strong><br />
-      {stats.nextEvent.dateLabel} — 申込は <a href={stats.nextEvent.url}>connpass</a> から
-    </p>
-  </div>
+  {
+    nextEvent ? (
+      <div class="notice">
+        <p style="margin: 0;">
+          <strong>{nextEvent.title}</strong>
+          <br />
+          {formatDateLabel(nextEvent.start)} — 申込は <a href={nextEvent.url}>connpass</a> から
+        </p>
+      </div>
+    ) : (
+      <p class="notice">
+        次回は準備中です。募集開始は <a href={CONNPASS_URL}>connpass</a> でお知らせします。
+      </p>
+    )
+  }
 
-  <h2>開催実績({pastEvents.length}回)</h2>
+  <h2>開催実績({past.length}回)</h2>
   <ul>
     {
-      pastEvents.map((e) => (
+      past.map((e) => (
         <li>
-          <small>{e.date}</small> {e.title}
+          <small>{formatDateShort(e.start)}</small> {e.title}
         </li>
       ))
     }
