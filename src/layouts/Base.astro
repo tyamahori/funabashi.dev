@@ -1,0 +1,125 @@
+---
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description = SITE_DESCRIPTION } = Astro.props;
+const pageTitle = title ? `${title} | ${SITE_TITLE}` : SITE_TITLE;
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="/">Funabashi.dev</a>
+      <nav>
+        <a href="/about">About</a>
+        <a href="/activities">活動</a>
+        <a href="/events">イベント</a>
+        <a href="/news">新聞部</a>
+        <a href="/join">参加する</a>
+      </nav>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <p>Funabashi.dev — 船橋を中心としたIT/Web系開発者コミュニティ</p>
+    </footer>
+  </body>
+</html>
+
+<style is:global>
+  /* スケルトン段階の最小スタイル。デザインはフェーズ3で全面的に入れ替える */
+  :root {
+    --ink: #22261b;
+    --paper: #fdfdf8;
+    --accent: #55742f;
+    --muted: #6d7260;
+  }
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    color: var(--ink);
+    background: var(--paper);
+    font-family: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', Meiryo, sans-serif;
+    line-height: 1.8;
+  }
+  .site-header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--muted);
+  }
+  .site-header .brand {
+    font-weight: 700;
+    text-decoration: none;
+    color: var(--ink);
+    margin-right: auto;
+  }
+  .site-header nav {
+    display: flex;
+    gap: 1rem;
+  }
+  .site-header nav a {
+    color: var(--ink);
+    text-decoration: none;
+  }
+  main {
+    max-width: 46rem;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 4rem;
+  }
+  .site-footer {
+    border-top: 1px solid var(--muted);
+    padding: 1.5rem;
+    color: var(--muted);
+    font-size: 0.85rem;
+    text-align: center;
+  }
+  a {
+    color: var(--accent);
+  }
+  .cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin: 1.5rem 0;
+  }
+  .cta {
+    display: inline-block;
+    padding: 0.6rem 1.4rem;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 700;
+  }
+  .cta.primary {
+    background: var(--accent);
+    color: #fff;
+  }
+  .cta.secondary {
+    border: 2px solid var(--accent);
+    color: var(--accent);
+  }
+  .placeholder {
+    border: 1px dashed var(--muted);
+    border-radius: 8px;
+    padding: 1rem;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+</style>
