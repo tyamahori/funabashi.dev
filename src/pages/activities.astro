@@ -1,6 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
+import { Image } from 'astro:assets';
 import { DISCORD_INVITE_URL, CONNPASS_URL } from '../consts';
+import scenes from '../assets/funadev_3.png';
 ---
 
 <Base title="活動紹介">
@@ -10,6 +12,18 @@ import { DISCORD_INVITE_URL, CONNPASS_URL } from '../consts';
     イベントは年数回の勉強会・懇親会、Discord は毎日。
     ここでは Discord の中で実際に動いているチャンネル文化を紹介します。
   </p>
+
+  <figure class="figure">
+    <Image
+      src={scenes}
+      alt="活動のイメージイラスト3枚: カフェでコードを見せながら話すふなデブくん、ペアプログラミング中のふなデブくんとメンバー、ヘッドホンをして集中するもくもく会のようす"
+      widths={[640, 1024, 1600]}
+      sizes="(max-width: 48rem) 100vw, 45.5rem"
+      format="webp"
+      quality={80}
+    />
+    <figcaption>もくもく会・ペアプロのイメージ(<a href="/funadebu">ふなデブくん</a>も参加)</figcaption>
+  </figure>
 
   <h2>技術の話題</h2>
   <ul class="card-grid">

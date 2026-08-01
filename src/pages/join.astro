@@ -1,6 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
+import { Image } from 'astro:assets';
 import { DISCORD_INVITE_URL, CONNPASS_URL, X_HASHTAG_URL } from '../consts';
+import comic from '../assets/funadev_2.png';
 ---
 
 <Base title="参加する">
@@ -10,6 +12,18 @@ import { DISCORD_INVITE_URL, CONNPASS_URL, X_HASHTAG_URL } from '../consts';
     日常から入るなら <a href={DISCORD_INVITE_URL}>Discord</a>。どちらが先でも大丈夫です。
     船橋・千葉を謳っていますが、交流の意思のある方ならどなたでも歓迎です。
   </p>
+
+  <figure class="figure">
+    <Image
+      src={comic}
+      alt="8コマ漫画: ひとりで開発していたエンジニアに、マスコットのふなデブくんが「おーい!そこのエンジニアさん!」と声をかけ、Funabashi.devを案内する。LT会やもくもく会、終わったあとのビールを経て「地元で仲間を作ろう!Connpassで検索してね!」と誘う"
+      widths={[640, 1024, 1600]}
+      sizes="(max-width: 48rem) 100vw, 45.5rem"
+      format="webp"
+      quality={80}
+    />
+    <figcaption>参加までの流れ(案内人: <a href="/funadebu">ふなデブくん</a>)</figcaption>
+  </figure>
 
   <h2>Discord の歩き方</h2>
   <ol>
