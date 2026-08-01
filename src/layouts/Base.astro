@@ -8,6 +8,8 @@ interface Props {
 
 const { title, description = SITE_DESCRIPTION } = Astro.props;
 const pageTitle = title ? `${title} | ${SITE_TITLE}` : SITE_TITLE;
+const ogImage = new URL('/ogp.jpg', Astro.site);
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <!doctype html>
@@ -20,6 +22,12 @@ const pageTitle = title ? `${title} | ${SITE_TITLE}` : SITE_TITLE;
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="654" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href={canonicalUrl} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   </head>
   <body>
@@ -30,6 +38,7 @@ const pageTitle = title ? `${title} | ${SITE_TITLE}` : SITE_TITLE;
         <a href="/activities">活動</a>
         <a href="/events">イベント</a>
         <a href="/news">新聞部</a>
+        <a href="/funadebu">ふなデブくん</a>
         <a class="nav-join" href="/join">参加する</a>
       </nav>
     </header>
@@ -38,7 +47,7 @@ const pageTitle = title ? `${title} | ${SITE_TITLE}` : SITE_TITLE;
     </main>
     <footer class="site-footer">
       <p class="mono">funabashi.dev — 船橋を中心としたIT/Web系開発者コミュニティ(2021年〜)</p>
-      <p>マスコット: ふなデブくん 🍐(枝がFの梨、5年越しの採用)</p>
+      <p>マスコット: <a href="/funadebu">ふなデブくん</a> 🍐(枝がFの梨、5年越しの採用)</p>
     </footer>
   </body>
 </html>
@@ -262,6 +271,24 @@ const pageTitle = title ? `${title} | ${SITE_TITLE}` : SITE_TITLE;
     margin: 0;
     font-size: 0.9rem;
     color: var(--muted);
+  }
+
+  .figure {
+    margin: 1.75rem 0;
+  }
+  .figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    border: 1px solid var(--hairline);
+  }
+  .figure figcaption {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-top: 0.45rem;
+    text-align: right;
+    font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
   }
 
   .notice {
