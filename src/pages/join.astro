@@ -1,0 +1,16 @@
+---
+import Base from '../layouts/Base.astro';
+import { DISCORD_INVITE_URL, X_HASHTAG_URL } from '../consts';
+---
+
+<Base title="参加する">
+  <h1>参加する</h1>
+  <p>
+    船橋・千葉を謳っていますが、交流の意思のある方であればどなたでも歓迎です。
+    <a href={DISCORD_INVITE_URL}>Discord</a> に参加して、あいさつチャンネルで一言どうぞ。
+    X のハッシュタグは <a href={X_HASHTAG_URL}>#funabashidev</a> です。
+  </p>
+  <div class="placeholder">
+    TODO(フェーズ3): Discord の歩き方(最初に見るチャンネル、雰囲気、よくある質問)。
+  </div>
+</Base>

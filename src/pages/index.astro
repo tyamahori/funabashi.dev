@@ -1,0 +1,66 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+import { DISCORD_INVITE_URL, CONNPASS_URL, NEWS_CATEGORIES } from '../consts';
+
+const latestNews = (await getCollection('news'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+---
+
+<Base>
+  <section>
+    <h1>船橋で、ゆるく長くつながる開発者コミュニティ</h1>
+    <p>
+      Funabashi.dev は船橋市を中心とした IT/Web 系開発者のコミュニティです。
+      2021年の発足から、勉強会も雑談も部活動も、地元で続いています。
+    </p>
+    <div class="cta-row">
+      <a class="cta primary" href={CONNPASS_URL}>イベントに遊びに来る</a>
+      <a class="cta secondary" href={DISCORD_INVITE_URL}>Discord に参加する</a>
+    </div>
+  </section>
+
+  <section>
+    <h2>数字で見る Funabashi.dev</h2>
+    <div class="placeholder">
+      TODO(フェーズ3): 創設年・メンバー数(Discord+connpass等の合計)・チャンネル数・イベント開催回数。
+      集計方法が決まり次第ここに入れる。
+    </div>
+  </section>
+
+  <section>
+    <h2>勉強会だけじゃない部活動</h2>
+    <div class="placeholder">
+      TODO(フェーズ3): 麻雀・ボルダリング・金融ゼミ・グルメなどの部活動カード3〜4枚。
+      詳細は <a href="/activities">活動紹介</a> へ。
+    </div>
+  </section>
+
+  <section>
+    <h2>次回イベント</h2>
+    <div class="placeholder">
+      TODO(フェーズ4): connpass API からビルド時に自動取得して表示。
+      それまでは <a href={CONNPASS_URL}>connpass</a> を直接どうぞ。
+    </div>
+  </section>
+
+  <section>
+    <h2>新聞部の新着</h2>
+    {
+      latestNews.length > 0 ? (
+        <ul>
+          {latestNews.map((entry) => (
+            <li>
+              <a href={`/news/${entry.id}`}>{entry.data.title}</a>
+              <small> — {NEWS_CATEGORIES[entry.data.category]}</small>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>準備中です。</p>
+      )
+    }
+    <p><a href="/news">記事一覧へ →</a></p>
+  </section>
+</Base>

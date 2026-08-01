@@ -1,0 +1,14 @@
+---
+import Base from '../layouts/Base.astro';
+import { CONNPASS_URL } from '../consts';
+---
+
+<Base title="イベント">
+  <h1>イベント</h1>
+  <p>
+    イベントの募集は <a href={CONNPASS_URL}>connpass</a> で行っています。
+  </p>
+  <div class="placeholder">
+    TODO(フェーズ4): connpass API からの次回イベント自動表示と、過去の開催実績一覧。
+  </div>
+</Base>
