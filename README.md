@@ -66,7 +66,7 @@ GitHub リポジトリ連携で main への push が本番反映される(現行
 |---|---|
 | Build command | `bun run build` |
 | Build output directory | `dist` |
-| Node バージョン | 22(`.node-version`。Astro 5 が Node 18.17 を拒否するため必須) |
+| Node バージョン | 25系(`.node-version`。CFデフォルトの Node 18.17 は Astro 5 が拒否するため指定必須) |
 
 - 依存導入は bun.lock により自動で bun。`package.json` の `packageManager` フィールドで bun を指定する方式は CF の corepack 非対応でビルドが失敗するため revert 済み(環境変数 `BUN_VERSION` 方式は未検証)
 - 2026-08-01 にビルド設定の不整合で本番が一時 VitePress 誤ビルドになった事故あり(経緯は bot リポジトリ docs/ops/ のセッション日誌)。**ビルド設定を変えたら必ず本番の実配信を確認すること**
