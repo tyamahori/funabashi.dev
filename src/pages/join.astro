@@ -1,16 +1,41 @@
 ---
 import Base from '../layouts/Base.astro';
-import { DISCORD_INVITE_URL, X_HASHTAG_URL } from '../consts';
+import { DISCORD_INVITE_URL, CONNPASS_URL, X_HASHTAG_URL } from '../consts';
 ---
 
 <Base title="参加する">
   <h1>参加する</h1>
   <p>
-    船橋・千葉を謳っていますが、交流の意思のある方であればどなたでも歓迎です。
-    <a href={DISCORD_INVITE_URL}>Discord</a> に参加して、あいさつチャンネルで一言どうぞ。
-    X のハッシュタグは <a href={X_HASHTAG_URL}>#funabashidev</a> です。
+    入口は2つあります。イベントから入るなら <a href={CONNPASS_URL}>connpass</a>、
+    日常から入るなら <a href={DISCORD_INVITE_URL}>Discord</a>。どちらが先でも大丈夫です。
+    船橋・千葉を謳っていますが、交流の意思のある方ならどなたでも歓迎です。
   </p>
-  <div class="placeholder">
-    TODO(フェーズ3): Discord の歩き方(最初に見るチャンネル、雰囲気、よくある質問)。
-  </div>
+
+  <h2>Discord の歩き方</h2>
+  <ol>
+    <li><a href={DISCORD_INVITE_URL}>招待リンク</a>から参加する</li>
+    <li>あいさつチャンネルで一言どうぞ(「!!!」付きの過剰歓迎が伝統です)</li>
+    <li>気になるチャンネルを覗く — 技術も麻雀もグルメも、発言はいつでも・読むだけでも OK</li>
+    <li>ふなデブくん(マスコット bot)にメンションすると返事が来ます。話しかけてみてください</li>
+  </ol>
+
+  <h2>よくある質問</h2>
+  <p>
+    <strong>船橋在住じゃなくても参加できますか?</strong> — できます。
+    千葉県内はもちろん、船橋にゆかりがある方も、単に面白そうと思った方も歓迎です。
+  </p>
+  <p>
+    <strong>エンジニアじゃないとだめですか?</strong> — IT/Web「系」なので、
+    デザイナー・PM・情シス・学生など、開発のまわりにいる方はみんな対象です。
+  </p>
+  <p>
+    <strong>費用はかかりますか?</strong> — Discord は無料です。
+    イベントは会場により実費をいただく場合があります(connpass の募集ページに明記)。
+  </p>
+
+  <h2>SNS</h2>
+  <p>
+    X のハッシュタグは <a href={X_HASHTAG_URL}>#funabashidev</a> です。
+    イベントの感想や日々の開発の話題にどうぞ。
+  </p>
 </Base>

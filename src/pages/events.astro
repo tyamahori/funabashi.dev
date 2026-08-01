@@ -1,14 +1,53 @@
 ---
 import Base from '../layouts/Base.astro';
 import { CONNPASS_URL } from '../consts';
+import stats from '../data/stats.json';
+
+// 開催実績(connpassより)。フェーズ4でconnpass APIからのビルド時自動取得に置き換える
+const pastEvents = [
+  { date: '2026/04/18', title: '【第06回】Funabashi.dev supported by KIKKAKE CREATION' },
+  { date: '2025/12/06', title: '【第05回】Funabashi.dev + 忘年会' },
+  { date: '2025/09/13', title: '【第04回】Funabashi.dev supported by KIKKAKE CREATION' },
+  { date: '2025/06/14', title: '【第3.1回】ボルダリング回' },
+  { date: '2025/05/24', title: '【第3回】Funabashi.dev supported by KIKKAKE CREATION' },
+  { date: '2025/03/15', title: '【第2.5回】Funabashi.dev in 渋谷' },
+  { date: '2025/01/25', title: '【第2回】Funabashi.dev + 懇親会' },
+  { date: '2024/12/14', title: '2024年忘年会' },
+];
 ---
 
 <Base title="イベント">
   <h1>イベント</h1>
   <p>
-    イベントの募集は <a href={CONNPASS_URL}>connpass</a> で行っています。
+    船橋市内を主会場に、年数回の勉強会と季節の懇親会を開いています。
+    募集はすべて <a href={CONNPASS_URL}>connpass</a> です。
   </p>
-  <div class="placeholder">
-    TODO(フェーズ4): connpass API からの次回イベント自動表示と、過去の開催実績一覧。
+
+  <h2>次回</h2>
+  <div class="notice">
+    <p style="margin: 0;">
+      <strong>{stats.nextEvent.title}</strong><br />
+      {stats.nextEvent.dateLabel} — 申込は <a href={stats.nextEvent.url}>connpass</a> から
+    </p>
   </div>
+
+  <h2>開催実績({stats.eventsHeld}回)</h2>
+  <ul>
+    {
+      pastEvents.map((e) => (
+        <li>
+          <small>{e.date}</small> {e.title}
+        </li>
+      ))
+    }
+    <li>
+      <small>ほか</small> 発足期のイベントを含む全履歴は
+      <a href={`${CONNPASS_URL}/event/`}>connpass のイベント一覧</a>へ
+    </li>
+  </ul>
+
+  <p>
+    勉強会はLT中心で、初登壇の練習の場としてもどうぞ。
+    聞くだけの参加も歓迎です。
+  </p>
 </Base>
