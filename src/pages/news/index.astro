@@ -1,0 +1,35 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+import { NEWS_CATEGORIES } from '../../consts';
+
+const entries = (await getCollection('news')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+const fmt = new Intl.DateTimeFormat('ja-JP', { dateStyle: 'medium' });
+---
+
+<Base title="ふなデブくん新聞部">
+  <h1>ふなデブくん新聞部</h1>
+  <p>
+    Discord で話題になったこと、船橋の地域ニュース、技術ニュースを、
+    公式マスコット・ふなデブくんの一言つきでお届けします。
+  </p>
+  {
+    entries.length > 0 ? (
+      <ul>
+        {entries.map((entry) => (
+          <li>
+            <a href={`/news/${entry.id}`}>{entry.data.title}</a>
+            <small>
+              — {NEWS_CATEGORIES[entry.data.category]} / {fmt.format(entry.data.date)}
+            </small>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p>創刊準備中です。</p>
+    )
+  }
+</Base>

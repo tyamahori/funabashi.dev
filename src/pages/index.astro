@@ -1,0 +1,186 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+import { DISCORD_INVITE_URL, CONNPASS_URL, NEWS_CATEGORIES } from '../consts';
+import stats from '../data/stats.json';
+
+const latestNews = (await getCollection('news'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+
+const memberTotal = stats.discordMembers + stats.connpassMembers;
+const statTiles = [
+  { label: 'since', value: `${stats.foundedYear}`, note: '船橋の地元コミュニティとして' },
+  { label: 'members', value: `${memberTotal}`, note: `のべ人数(Discord ${stats.discordMembers} + connpass ${stats.connpassMembers})` },
+  { label: 'events', value: `${stats.eventsHeld}`, note: '勉強会から忘年会まで' },
+  { label: 'channels', value: `${stats.channelCount}`, note: '技術も麻雀もグルメも' },
+];
+---
+
+<Base>
+  <section class="hero">
+    <a class="announce" href={stats.nextEvent.url}>
+      <span class="announce-tag">NEXT</span>
+      {stats.nextEvent.dateLabel} {stats.nextEvent.title} — 申込受付中 →
+    </a>
+    <p class="eyebrow">~/chiba/funabashi $ dev community</p>
+    <h1>
+      船橋で、ゆるく長くつながる<br />
+      <span class="grad">開発者コミュニティ</span>
+    </h1>
+    <p>
+      Funabashi.dev は船橋市を中心とした IT/Web 系開発者と関係者のコミュニティです。
+      2021年の発足から、勉強会も雑談も、麻雀もボルダリングも、地元で続いています。
+      船橋・千葉を謳っていますが、交流の意思のある方ならどなたでも歓迎です。
+    </p>
+    <div class="cta-row">
+      <a class="cta primary" href={CONNPASS_URL}>イベントに遊びに来る</a>
+      <a class="cta secondary" href={DISCORD_INVITE_URL}>Discord に参加する</a>
+    </div>
+  </section>
+
+  <section>
+    <h2>数字で見る Funabashi.dev</h2>
+    <ul class="stat-row">
+      {
+        statTiles.map((s) => (
+          <li class="stat-tile">
+            <span class="stat-label mono">{s.label}</span>
+            <span class="stat-value">{s.value}</span>
+            <span class="stat-note">{s.note}</span>
+          </li>
+        ))
+      }
+    </ul>
+    <p class="asof mono">last update: {stats.asOf}</p>
+  </section>
+
+  <section>
+    <h2>勉強会だけじゃない部活動</h2>
+    <p>
+      Discord の中では技術の話題と同じ熱量で、生活圏の話題が毎日動いています。
+      これが「地元コミュニティ」の中身です。
+    </p>
+    <ul class="card-grid">
+      <li class="card">
+        <h3>🀄 麻雀部</h3>
+        <p>何切る問題から点数計算まで。事務所を借りた練習会も開かれます。</p>
+      </li>
+      <li class="card">
+        <h3>🧗 ボルダリング部</h3>
+        <p>市内ジムの完登報告が飛び交います。ジム回もイベントとして開催実績あり。</p>
+      </li>
+      <li class="card">
+        <h3>📈 金融ゼミ</h3>
+        <p>決算の読み方から相場の教訓まで、先生役のメンバーによる課外授業が名物。</p>
+      </li>
+      <li class="card">
+        <h3>🍜 グルメ部</h3>
+        <p>船橋のラーメン・居酒屋・閉店開店情報。地元の食データベースが日々更新中。</p>
+      </li>
+    </ul>
+    <p><a href="/activities">活動紹介をもっと見る →</a></p>
+  </section>
+
+  <section>
+    <h2>ふなデブくん新聞部の新着</h2>
+    {
+      latestNews.length > 0 ? (
+        <ul class="news-list">
+          {latestNews.map((entry) => (
+            <li>
+              <a href={`/news/${entry.id}`}>{entry.data.title}</a>
+              <small class="mono"> {NEWS_CATEGORIES[entry.data.category]}</small>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>創刊準備中です。</p>
+      )
+    }
+    <p><a href="/news">記事一覧へ →</a></p>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    padding-top: 1rem;
+    background-image: radial-gradient(var(--accent-glow) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+  .announce {
+    display: inline-block;
+    font-size: 0.85rem;
+    text-decoration: none;
+    color: var(--ink);
+    border: 1px solid var(--hairline);
+    background: var(--surface);
+    border-radius: 999px;
+    padding: 0.3rem 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .announce:hover {
+    border-color: var(--accent);
+    opacity: 1;
+  }
+  .announce-tag {
+    color: var(--accent);
+    font-weight: 700;
+    font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+    font-size: 0.75rem;
+    margin-right: 0.5rem;
+  }
+  .hero h1 {
+    font-size: 2.1rem;
+  }
+  .grad {
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+    gap: 0.9rem;
+    padding: 0;
+    margin: 1.25rem 0 0.25rem;
+    list-style: none;
+  }
+  .stat-tile {
+    display: flex;
+    flex-direction: column;
+    background: var(--surface);
+    border: 1px solid var(--hairline);
+    border-radius: 12px;
+    padding: 0.95rem 1.05rem;
+  }
+  .stat-label {
+    font-size: 0.78rem;
+    color: var(--accent);
+    letter-spacing: 0.06em;
+  }
+  .stat-value {
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+  .stat-note {
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+  .asof {
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-align: right;
+    margin-top: 0.4rem;
+  }
+
+  .news-list {
+    padding-left: 1.2rem;
+  }
+  .news-list small {
+    color: var(--muted);
+  }
+</style>

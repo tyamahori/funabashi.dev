@@ -1,0 +1,55 @@
+---
+import Base from '../layouts/Base.astro';
+import { Image } from 'astro:assets';
+import { DISCORD_INVITE_URL, CONNPASS_URL, X_HASHTAG_URL } from '../consts';
+import comic from '../assets/funadev_2.png';
+---
+
+<Base title="参加する">
+  <h1>参加する</h1>
+  <p>
+    入口は2つあります。イベントから入るなら <a href={CONNPASS_URL}>connpass</a>、
+    日常から入るなら <a href={DISCORD_INVITE_URL}>Discord</a>。どちらが先でも大丈夫です。
+    船橋・千葉を謳っていますが、交流の意思のある方ならどなたでも歓迎です。
+  </p>
+
+  <figure class="figure">
+    <Image
+      src={comic}
+      alt="8コマ漫画: ひとりで開発していたエンジニアに、マスコットのふなデブくんが「おーい!そこのエンジニアさん!」と声をかけ、Funabashi.devを案内する。LT会やもくもく会、終わったあとのビールを経て「地元で仲間を作ろう!Connpassで検索してね!」と誘う"
+      widths={[640, 1024, 1600]}
+      sizes="(max-width: 48rem) 100vw, 45.5rem"
+      format="webp"
+      quality={80}
+    />
+    <figcaption>参加までの流れ(案内人: <a href="/funadebu">ふなデブくん</a>)</figcaption>
+  </figure>
+
+  <h2>Discord の歩き方</h2>
+  <ol>
+    <li><a href={DISCORD_INVITE_URL}>招待リンク</a>から参加する</li>
+    <li>あいさつチャンネルで一言どうぞ(「!!!」付きの過剰歓迎が伝統です)</li>
+    <li>気になるチャンネルを覗く — 技術も麻雀もグルメも、発言はいつでも・読むだけでも OK</li>
+    <li>ふなデブくん(マスコット bot)にメンションすると返事が来ます。話しかけてみてください</li>
+  </ol>
+
+  <h2>よくある質問</h2>
+  <p>
+    <strong>船橋在住じゃなくても参加できますか?</strong> — できます。
+    千葉県内はもちろん、船橋にゆかりがある方も、単に面白そうと思った方も歓迎です。
+  </p>
+  <p>
+    <strong>エンジニアじゃないとだめですか?</strong> — IT/Web「系」なので、
+    デザイナー・PM・情シス・学生など、開発のまわりにいる方はみんな対象です。
+  </p>
+  <p>
+    <strong>費用はかかりますか?</strong> — Discord は無料です。
+    イベントは会場により実費をいただく場合があります(connpass の募集ページに明記)。
+  </p>
+
+  <h2>SNS</h2>
+  <p>
+    X のハッシュタグは <a href={X_HASHTAG_URL}>#funabashidev</a> です。
+    イベントの感想や日々の開発の話題にどうぞ。
+  </p>
+</Base>
