@@ -6,11 +6,13 @@
 
 ## 開発
 
+パッケージマネージャは bun。
+
 ```sh
-npm install
-npm run dev      # http://localhost:4321
-npm run build    # dist/ に静的出力
-npm run preview
+bun install
+bun run dev      # http://localhost:4321
+bun run build    # dist/ に静的出力
+bun run preview
 ```
 
 ## 記事の追加(ふなデブくん新聞部)
@@ -31,10 +33,9 @@ description: 一覧・OGP用の要約(任意)
 
 ## デプロイ(Cloudflare Pages)
 
-GitHub リポジトリ連携で main へのマージが本番反映される。**VitePress → Astro 移行に伴い、Cloudflare Pages のビルド設定を次に変更すること**:
+GitHub リポジトリ連携で main へのマージが本番反映される。**VitePress → Astro 移行に伴い、Cloudflare Pages のビルド設定を次に変更すること**(bun.lock があるので依存導入は bun が自動で使われる):
 
 | 設定 | 値 |
 |---|---|
-| Build command | `npm run build` |
+| Build command | `bun run build` |
 | Build output directory | `dist` |
-| 環境変数 `NODE_VERSION` | `22`(Astro 5 は Node 18.17 以上必須) |
