@@ -2,18 +2,28 @@
 import Base from '../layouts/Base.astro';
 import { getCollection } from 'astro:content';
 import { DISCORD_INVITE_URL, CONNPASS_URL, NEWS_CATEGORIES } from '../consts';
+import stats from '../data/stats.json';
 
 const latestNews = (await getCollection('news'))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 3);
+
+const memberTotal = stats.discordMembers + stats.connpassMembers;
+const statTiles = [
+  { label: '発足', value: `${stats.foundedYear}年`, note: '船橋の地元コミュニティとして' },
+  { label: 'メンバー(のべ)', value: `${memberTotal}人`, note: `Discord ${stats.discordMembers} + connpass ${stats.connpassMembers}` },
+  { label: 'イベント開催', value: `${stats.eventsHeld}回`, note: '勉強会から忘年会まで' },
+  { label: 'Discordチャンネル', value: `${stats.channelCount}`, note: '技術も麻雀もグルメも' },
+];
 ---
 
 <Base>
-  <section>
-    <h1>船橋で、ゆるく長くつながる開発者コミュニティ</h1>
+  <section class="hero">
+    <h1>船橋で、ゆるく長くつながる<br />開発者コミュニティ</h1>
     <p>
-      Funabashi.dev は船橋市を中心とした IT/Web 系開発者のコミュニティです。
-      2021年の発足から、勉強会も雑談も部活動も、地元で続いています。
+      Funabashi.dev は船橋市を中心とした IT/Web 系開発者と関係者のコミュニティです。
+      2021年の発足から、勉強会も雑談も、麻雀もボルダリングも、地元で続いています。
+      船橋・千葉を謳っていますが、交流の意思のある方ならどなたでも歓迎です。
     </p>
     <div class="cta-row">
       <a class="cta primary" href={CONNPASS_URL}>イベントに遊びに来る</a>
@@ -23,30 +33,60 @@ const latestNews = (await getCollection('news'))
 
   <section>
     <h2>数字で見る Funabashi.dev</h2>
-    <div class="placeholder">
-      TODO(フェーズ3): 創設年・メンバー数(Discord+connpass等の合計)・チャンネル数・イベント開催回数。
-      集計方法が決まり次第ここに入れる。
-    </div>
+    <ul class="stat-row">
+      {
+        statTiles.map((s) => (
+          <li class="stat-tile">
+            <span class="stat-label">{s.label}</span>
+            <span class="stat-value">{s.value}</span>
+            <span class="stat-note">{s.note}</span>
+          </li>
+        ))
+      }
+    </ul>
+    <p class="asof">{stats.asOf} 時点</p>
   </section>
 
   <section>
     <h2>勉強会だけじゃない部活動</h2>
-    <div class="placeholder">
-      TODO(フェーズ3): 麻雀・ボルダリング・金融ゼミ・グルメなどの部活動カード3〜4枚。
-      詳細は <a href="/activities">活動紹介</a> へ。
-    </div>
+    <p>
+      Discord の中では技術の話題と同じ熱量で、生活圏の話題が毎日動いています。
+      これが「地元コミュニティ」の中身です。
+    </p>
+    <ul class="card-grid">
+      <li class="card">
+        <h3>🀄 麻雀部</h3>
+        <p>何切る問題から点数計算まで。事務所を借りた練習会も開かれます。</p>
+      </li>
+      <li class="card">
+        <h3>🧗 ボルダリング部</h3>
+        <p>市内ジムの完登報告が飛び交います。ジム回もイベントとして開催実績あり。</p>
+      </li>
+      <li class="card">
+        <h3>📈 金融ゼミ</h3>
+        <p>決算の読み方から相場の教訓まで、先生役のメンバーによる課外授業が名物。</p>
+      </li>
+      <li class="card">
+        <h3>🍜 グルメ部</h3>
+        <p>船橋のラーメン・居酒屋・閉店開店情報。地元の食データベースが日々更新中。</p>
+      </li>
+    </ul>
+    <p><a href="/activities">活動紹介をもっと見る →</a></p>
   </section>
 
   <section>
     <h2>次回イベント</h2>
-    <div class="placeholder">
-      TODO(フェーズ4): connpass API からビルド時に自動取得して表示。
-      それまでは <a href={CONNPASS_URL}>connpass</a> を直接どうぞ。
+    <div class="notice">
+      <p style="margin: 0;">
+        <strong>{stats.nextEvent.title}</strong><br />
+        {stats.nextEvent.dateLabel} — 申込は
+        <a href={stats.nextEvent.url}>connpass</a> から
+      </p>
     </div>
   </section>
 
   <section>
-    <h2>新聞部の新着</h2>
+    <h2>ふなデブくん新聞部の新着</h2>
     {
       latestNews.length > 0 ? (
         <ul>
@@ -58,9 +98,50 @@ const latestNews = (await getCollection('news'))
           ))}
         </ul>
       ) : (
-        <p>準備中です。</p>
+        <p>創刊準備中です。</p>
       )
     }
     <p><a href="/news">記事一覧へ →</a></p>
   </section>
 </Base>
+
+<style>
+  .hero h1 {
+    font-size: 1.9rem;
+  }
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+    gap: 0.9rem;
+    padding: 0;
+    margin: 1.25rem 0 0.25rem;
+    list-style: none;
+  }
+  .stat-tile {
+    display: flex;
+    flex-direction: column;
+    background: var(--surface);
+    border: 1px solid var(--hairline);
+    border-radius: 10px;
+    padding: 0.9rem 1rem;
+  }
+  .stat-label {
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+  .stat-value {
+    font-size: 1.7rem;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+  .stat-note {
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+  .asof {
+    font-size: 0.78rem;
+    color: var(--muted);
+    text-align: right;
+    margin-top: 0.4rem;
+  }
+</style>
