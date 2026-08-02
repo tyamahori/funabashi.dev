@@ -10,7 +10,10 @@ const entries = (await getCollection('news')).sort(
 const fmt = new Intl.DateTimeFormat('ja-JP', { dateStyle: 'medium' });
 ---
 
-<Base title="ふなデブくん新聞部">
+<Base
+  title="ふなデブくん新聞部"
+  description="ふなデブくん新聞部の記事一覧。Discordで話題になったこと、船橋の地域ニュース、技術ニュースを、公式マスコット・ふなデブくんの一言つきでお届けします。"
+>
   <h1>ふなデブくん新聞部</h1>
   <p>
     Discord で話題になったこと、船橋の地域ニュース、技術ニュースを、
