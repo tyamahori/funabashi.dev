@@ -4,6 +4,7 @@ import { getCollection } from 'astro:content';
 import {
   SITE_TITLE,
   SITE_DESCRIPTION,
+  SITE_ALTERNATE_NAMES,
   DISCORD_INVITE_URL,
   CONNPASS_URL,
   HIGAFUNA_NAME,
@@ -35,6 +36,7 @@ const jsonLd = {
       '@type': 'Organization',
       '@id': new URL('/#organization', Astro.site).href,
       name: SITE_TITLE,
+      alternateName: SITE_ALTERNATE_NAMES,
       url: Astro.site?.href,
       description: SITE_DESCRIPTION,
       foundingDate: '2021-11',
@@ -59,6 +61,7 @@ const jsonLd = {
       '@type': 'WebSite',
       '@id': new URL('/#website', Astro.site).href,
       name: SITE_TITLE,
+      alternateName: SITE_ALTERNATE_NAMES,
       url: Astro.site?.href,
       inLanguage: 'ja',
       publisher: { '@id': new URL('/#organization', Astro.site).href },
@@ -86,7 +89,7 @@ const jsonLd = {
       <span class="grad">開発者コミュニティ</span>
     </h1>
     <p>
-      Funabashi.dev は船橋市を中心とした IT/Web 系開発者と関係者のコミュニティです。
+      Funabashi.dev(通称「ふなでぶ」)は船橋市を中心とした IT/Web 系開発者と関係者のコミュニティです。
       2021年の発足から、勉強会も雑談も、麻雀もボルダリングも、地元で続いています。
       船橋・千葉を謳っていますが、交流の意思のある方ならどなたでも歓迎です。
     </p>
