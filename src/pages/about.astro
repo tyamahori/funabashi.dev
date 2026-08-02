@@ -1,9 +1,12 @@
 ---
 import Base from '../layouts/Base.astro';
-import { DISCORD_INVITE_URL } from '../consts';
+import { DISCORD_INVITE_URL, HIGAFUNA_NAME, HIGAFUNA_URL } from '../consts';
 ---
 
-<Base title="About">
+<Base
+  title="About"
+  description="Funabashi.devは2021年11月発足、船橋市を中心とするIT/Web系開発者の地域コミュニティ。生活圏でつながる活動方針と、マスコット・ふなデブくん誕生の経緯を紹介します。"
+>
   <h1>Funabashi.dev とは</h1>
   <p>
     <a href="https://x.com/tyamahori">ちゃまほり</a>が2021年11月に立ち上げた、
@@ -36,5 +39,11 @@ import { DISCORD_INVITE_URL } from '../consts';
   <p>
     <a href={DISCORD_INVITE_URL}>Discord</a> への参加が入口です。
     詳しくは<a href="/join">参加ガイド</a>をどうぞ。
+  </p>
+
+  <h2>運営</h2>
+  <p>
+    Funabashi.dev の運営会社は<a href={HIGAFUNA_URL}>{HIGAFUNA_NAME}</a>です。
+    東船橋を拠点に、Web広告・システム開発・IT活用のお手伝いをしている船橋の小さなIT会社です。
   </p>
 </Base>

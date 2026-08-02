@@ -1,5 +1,5 @@
 ---
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { SITE_TITLE, SITE_DESCRIPTION, HIGAFUNA_NAME, HIGAFUNA_URL } from '../consts';
 
 interface Props {
   title?: string;
@@ -60,6 +60,7 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
       <p class="mono">Funabashi.dev — 船橋を中心としたIT/Web系開発者コミュニティ(2021年〜)</p>
       <p>マスコット: <a href="/funadebu">ふなデブくん</a> 🍐(枝がFの梨、5年越しの採用)</p>
       <p class="mono"><a href="/rss.xml">RSS</a> — 新聞部の更新を購読できます</p>
+      <p>運営: <a href={HIGAFUNA_URL}>{HIGAFUNA_NAME}</a>(船橋市)</p>
     </footer>
   </body>
 </html>

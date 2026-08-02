@@ -1,7 +1,15 @@
 ---
 import Base from '../layouts/Base.astro';
 import { getCollection } from 'astro:content';
-import { DISCORD_INVITE_URL, CONNPASS_URL, NEWS_CATEGORIES } from '../consts';
+import {
+  SITE_TITLE,
+  SITE_DESCRIPTION,
+  DISCORD_INVITE_URL,
+  CONNPASS_URL,
+  HIGAFUNA_NAME,
+  HIGAFUNA_URL,
+  NEWS_CATEGORIES,
+} from '../consts';
 import stats from '../data/stats.json';
 import { getEvents, formatDateLabel } from '../lib/connpass';
 
@@ -19,9 +27,50 @@ const statTiles = [
   { label: 'events', value: `${past.length}`, note: '勉強会から忘年会まで' },
   { label: 'channels', value: `${stats.channelCount}`, note: '技術も麻雀もグルメも' },
 ];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': new URL('/#organization', Astro.site).href,
+      name: SITE_TITLE,
+      url: Astro.site?.href,
+      description: SITE_DESCRIPTION,
+      foundingDate: '2021-11',
+      logo: new URL('/ogp.jpg', Astro.site).href,
+      sameAs: [CONNPASS_URL, DISCORD_INVITE_URL],
+      parentOrganization: {
+        '@type': 'Organization',
+        name: HIGAFUNA_NAME,
+        url: HIGAFUNA_URL,
+      },
+      location: {
+        '@type': 'Place',
+        address: {
+          '@type': 'PostalAddress',
+          addressLocality: '船橋市',
+          addressRegion: '千葉県',
+          addressCountry: 'JP',
+        },
+      },
+    },
+    {
+      '@type': 'WebSite',
+      '@id': new URL('/#website', Astro.site).href,
+      name: SITE_TITLE,
+      url: Astro.site?.href,
+      inLanguage: 'ja',
+      publisher: { '@id': new URL('/#organization', Astro.site).href },
+    },
+  ],
+};
 ---
 
 <Base>
+  <Fragment slot="head">
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
+  </Fragment>
   <section class="hero">
     {
       nextEvent && (
