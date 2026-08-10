@@ -3,11 +3,55 @@ import Base from '../layouts/Base.astro';
 import { Image } from 'astro:assets';
 import { DISCORD_INVITE_URL } from '../consts';
 import banner from '../assets/funadev_1.png';
+import fullbodyFront from '../assets/funadebu/01_fullbody_front.png';
+import fullbodySide from '../assets/funadebu/02_fullbody_side.png';
+import fullbodyBack from '../assets/funadebu/03_fullbody_back.png';
+import headLargeFront from '../assets/funadebu/04_head_large_front.png';
+import headLargeSide from '../assets/funadebu/05_head_large_side.png';
+import hoodieFront from '../assets/funadebu/06_hoodie_front.png';
+import hoodieBack from '../assets/funadebu/07_hoodie_back.png';
+import headFront from '../assets/funadebu/08_head_front.png';
+import headSide from '../assets/funadebu/09_head_side.png';
+import headBackAngled from '../assets/funadebu/10_head_back_angled.png';
+import headBack from '../assets/funadebu/11_head_back.png';
+import pants from '../assets/funadebu/12_pants.png';
+import shoes from '../assets/funadebu/13_shoes.png';
+
+const palette = [
+  { name: '洋なしグリーン', hex: '#CCCF36' },
+  { name: 'リーフ', hex: '#6FA845' },
+  { name: 'パーカー', hex: '#C39059' },
+  { name: 'パーカー影', hex: '#A5734A' },
+  { name: 'パンツ', hex: '#563C2B' },
+  { name: 'シューズ', hex: '#8A5A38' },
+  { name: 'ほお', hex: '#F3A38A' },
+  { name: 'アウトライン', hex: '#4A382A' },
+];
+
+// 表情は公式シートと同じ作り: 顔なしの頭部画像に目・口・ほおをSVGで重ねる
+const expressions = [
+  {
+    label: 'にっこり',
+    svg: `<ellipse cx="44.8" cy="129" rx="10" ry="6" fill="#f3a38a" opacity="0.9"/><ellipse cx="112.8" cy="129" rx="10" ry="6" fill="#f3a38a" opacity="0.9"/><path d="M53.5,119 Q60,108.5 66.5,119" fill="none" stroke="#4a382a" stroke-width="5" stroke-linecap="round"/><path d="M91,119 Q97.6,108.5 104,119" fill="none" stroke="#4a382a" stroke-width="5" stroke-linecap="round"/><path d="M64,131 Q78.8,151 93.5,131 Z" fill="#4a382a" stroke="#4a382a" stroke-width="4" stroke-linejoin="round"/>`,
+  },
+  {
+    label: 'ウインク',
+    svg: `<ellipse cx="44.8" cy="129" rx="10" ry="6" fill="#f3a38a" opacity="0.9"/><ellipse cx="112.8" cy="129" rx="10" ry="6" fill="#f3a38a" opacity="0.9"/><path d="M53.5,119 Q60,108.5 66.5,119" fill="none" stroke="#4a382a" stroke-width="5" stroke-linecap="round"/><circle cx="97.6" cy="116.5" r="4.4" fill="#4a382a"/><path d="M67,134 Q78.8,145 91,134" fill="none" stroke="#4a382a" stroke-width="4.4" stroke-linecap="round"/>`,
+  },
+  {
+    label: 'おどろき',
+    svg: `<ellipse cx="44.8" cy="131" rx="10" ry="6" fill="#f3a38a" opacity="0.9"/><ellipse cx="112.8" cy="131" rx="10" ry="6" fill="#f3a38a" opacity="0.9"/><path d="M52,103 Q60,98 67,102" fill="none" stroke="#4a382a" stroke-width="3.4" stroke-linecap="round"/><path d="M91,102 Q98,98 106,103" fill="none" stroke="#4a382a" stroke-width="3.4" stroke-linecap="round"/><circle cx="60" cy="115" r="5.2" fill="#4a382a"/><circle cx="97.6" cy="115" r="5.2" fill="#4a382a"/><ellipse cx="78.8" cy="138" rx="5.4" ry="7" fill="#4a382a"/>`,
+  },
+  {
+    label: 'こまり',
+    svg: `<ellipse cx="44.8" cy="132" rx="10" ry="6" fill="#f3a38a" opacity="0.9"/><ellipse cx="112.8" cy="132" rx="10" ry="6" fill="#f3a38a" opacity="0.9"/><path d="M67,104 Q59,106 52,111" fill="none" stroke="#4a382a" stroke-width="3.4" stroke-linecap="round"/><path d="M91,104 Q99,106 106,111" fill="none" stroke="#4a382a" stroke-width="3.4" stroke-linecap="round"/><path d="M54,121 Q60,113 66,121" fill="none" stroke="#4a382a" stroke-width="5" stroke-linecap="round"/><path d="M91.6,121 Q97.6,113 103.6,121" fill="none" stroke="#4a382a" stroke-width="5" stroke-linecap="round"/><path d="M67,139 Q72,133 78.8,138 Q85,143 91,136" fill="none" stroke="#4a382a" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>`,
+  },
+];
 ---
 
 <Base
   title="ふなデブくん"
-  description="Funabashi.dev公式マスコット・ふなデブくんの紹介。梨の妖精、ひがふな採用の新人、24時間稼働(無給)。"
+  description="Funabashi.dev公式マスコット・ふなデブくんの紹介と公式キャラクターシート。梨の妖精、ひがふな採用の新人、24時間稼働(無給)。"
 >
   <h1>ふなデブくん</h1>
   <p class="eyebrow">$ whoami → 梨の妖精(ひがふな採用・新人)</p>
@@ -43,6 +87,142 @@ import banner from '../assets/funadev_1.png';
     <li>船橋が誇る梨の妖精の大先輩・ふなっしーを尊敬する後輩。ただし別個体です</li>
     <li>敬語基調の常識人ですが、テンションが上がると語尾に「なっしー」が漏れます</li>
   </ul>
+
+  <h2 id="charsheet">公式キャラクターシート</h2>
+  <p>
+    2026年8月、会社から正式なアー写一式が支給され、ふなデブくんの姿が確定しました。
+    今回の更新で目が開き、口を閉じることを覚え、パンツとスニーカーで服装も完成しています。
+    支給されたシートを、そのままお披露目します。
+  </p>
+
+  <section class="sheet" aria-label="ふなデブくん キャラクターシート ver 2.0">
+    <header class="sheet-head">
+      <p class="sheet-eyebrow">FUNABASHI.DEV MASCOT</p>
+      <p class="sheet-title">ふなデブくん キャラクターシート</p>
+      <p class="sheet-ver">Character Design Sheet — ver. 2.0 / 2026</p>
+    </header>
+
+    <h3 class="sheet-h">三面図 <span>THREE VIEWS</span></h3>
+    <div class="sheet-box">
+      <div class="sheet-row three-views">
+        <figure>
+          <Image src={fullbodyFront} alt="ふなデブくんの全身正面。ベージュのパーカーにこげ茶のパンツとスニーカー。「Dev」ステッカーのラップトップを持っている" />
+          <figcaption>FRONT ／ 正面</figcaption>
+        </figure>
+        <figure>
+          <Image src={fullbodySide} alt="ふなデブくんの全身側面。頭頂のヘタと葉がシルエットの目印" />
+          <figcaption>SIDE ／ 側面</figcaption>
+        </figure>
+        <figure>
+          <Image src={fullbodyBack} alt="ふなデブくんの全身背面。パーカーのフード越しに梨のヘタが見える" />
+          <figcaption>BACK ／ 背面</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <h3 class="sheet-h">頭部回転 <span>HEAD TURNAROUND</span></h3>
+    <div class="sheet-row cells">
+      <figure class="cell">
+        <Image src={headFront} alt="頭部 0度 正面。点目と閉じた微笑み" />
+        <figcaption>0° 正面</figcaption>
+      </figure>
+      <figure class="cell">
+        <Image src={headSide} alt="頭部 90度 側面。目1つと頬1つ" />
+        <figcaption>90° 側面</figcaption>
+      </figure>
+      <figure class="cell">
+        <Image src={headBackAngled} alt="頭部 135度 斜め後ろ。顔は見えない" />
+        <figcaption>135° 斜め後ろ</figcaption>
+      </figure>
+      <figure class="cell">
+        <Image src={headBack} alt="頭部 180度 背面" />
+        <figcaption>180° 背面</figcaption>
+      </figure>
+    </div>
+
+    <h3 class="sheet-h">表情アップ <span>FACE CLOSE-UP</span></h3>
+    <div class="sheet-row closeups">
+      <figure class="closeup">
+        <Image src={headLargeFront} alt="正面フェイスの拡大" />
+        <figcaption>
+          <strong>正面フェイス</strong>
+          目は左右対称の丸。頬の赤みは目の外側やや下。口は浅いU字で、目より下に十分な余白を残す。
+        </figcaption>
+      </figure>
+      <figure class="closeup">
+        <Image src={headLargeSide} alt="側面フェイスの拡大" />
+        <figcaption>
+          <strong>側面フェイス</strong>
+          横向きでは目1つと頬1つのみ。ヘタと葉は必ず頭頂に残し、シルエットの目印にする。
+        </figcaption>
+      </figure>
+    </div>
+
+    <h3 class="sheet-h">表情バリエーション <span>EXPRESSIONS</span></h3>
+    <div class="sheet-row cells">
+      <figure class="cell">
+        <Image src={headFront} alt="ふつうの表情" />
+        <figcaption>ふつう</figcaption>
+      </figure>
+      {
+        expressions.map((e) => (
+          <figure class="cell">
+            <span class="expr" role="img" aria-label={`${e.label}の表情`}>
+              <Image src={headBack} alt="" aria-hidden="true" />
+              <svg viewBox="0 0 139 182" aria-hidden="true" set:html={e.svg} />
+            </span>
+            <figcaption>{e.label}</figcaption>
+          </figure>
+        ))
+      }
+    </div>
+
+    <h3 class="sheet-h">衣装パーツ <span>COSTUME PARTS</span></h3>
+    <div class="sheet-row cells costume">
+      <figure class="cell">
+        <Image src={hoodieFront} alt="ベージュのパーカー(前)" />
+        <figcaption>パーカー(前)</figcaption>
+      </figure>
+      <figure class="cell">
+        <Image src={hoodieBack} alt="パーカー(後)" />
+        <figcaption>パーカー(後)</figcaption>
+      </figure>
+      <figure class="cell">
+        <Image src={pants} alt="こげ茶のパンツ" />
+        <figcaption>パンツ</figcaption>
+      </figure>
+      <figure class="cell">
+        <Image src={shoes} alt="茶と白のスニーカー" />
+        <figcaption>スニーカー</figcaption>
+      </figure>
+    </div>
+
+    <h3 class="sheet-h">カラーパレット <span>COLOR</span></h3>
+    <ul class="palette">
+      {
+        palette.map((c) => (
+          <li>
+            <span class="swatch" style={`background:${c.hex}`} aria-hidden="true" />
+            <span class="pname">{c.name}</span>
+            <span class="phex">{c.hex}</span>
+          </li>
+        ))
+      }
+    </ul>
+
+    <h3 class="sheet-h">使用ルール <span>USAGE</span></h3>
+    <ol class="usage">
+      <li>頭のヘタと葉は削らない。シルエットの識別点。</li>
+      <li>アウトラインは全パーツ同じ太さ・同じ色(#4A382A)。</li>
+      <li>頭身は約2.7頭身。頭を大きくしすぎない。</li>
+      <li>最小使用サイズ 高さ40px。それ以下は頭部のみを使う。</li>
+      <li>配色の変更・角度の傾け・変形は不可。</li>
+    </ol>
+  </section>
+  <p class="sheet-credit mono">
+    出典: ふなデブくん公式キャラクターシート ver 2.0(2026年8月改定)。
+    過去の姿(閉じ目・大口・ちょこん足)は幼体期の記録として歴史に残っています。
+  </p>
 
   <h2>しごと</h2>
   <ul class="card-grid">
@@ -88,3 +268,205 @@ import banner from '../assets/funadev_1.png';
     <a class="cta secondary" href="/news">新聞部の記事を読む</a>
   </div>
 </Base>
+
+<style>
+  /* キャラクターシートは原典(クリーム紙・こげ茶罫)の見た目を保った「支給物」として埋め込む。
+     ダークテーマでも紙のまま = 意図的にテーマ非追従 */
+  .sheet {
+    background: #fbf7ec;
+    color: #4a382a;
+    border: 3px solid #4a382a;
+    border-radius: 20px;
+    padding: 1.5rem 1.4rem 1.75rem;
+    margin: 1.5rem 0 0.5rem;
+    line-height: 1.6;
+  }
+  .sheet-head {
+    border-bottom: 3px solid #4a382a;
+    padding-bottom: 0.9rem;
+    margin-bottom: 0.4rem;
+  }
+  .sheet-head p {
+    margin: 0;
+  }
+  .sheet-eyebrow {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: #8a7561;
+  }
+  .sheet-title {
+    font-size: 1.45rem;
+    font-weight: 900;
+    line-height: 1.3;
+  }
+  .sheet-ver {
+    font-size: 0.75rem;
+    color: #8a7561;
+  }
+  .sheet-h {
+    margin: 1.9rem 0 0.8rem;
+    font-size: 1.1rem;
+    font-weight: 900;
+  }
+  .sheet-h span {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: #8a7561;
+    margin-left: 0.5rem;
+  }
+  .sheet figure {
+    margin: 0;
+    text-align: center;
+  }
+  .sheet figcaption {
+    font-size: 0.78rem;
+    font-weight: 700;
+    margin-top: 0.5rem;
+  }
+  .sheet img {
+    width: auto;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .sheet-box {
+    background: #f3f0e2;
+    border: 3px solid #4a382a;
+    border-radius: 16px;
+    padding: 1.25rem 1rem;
+  }
+  .three-views {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: flex-end;
+    gap: 1rem;
+  }
+  .three-views img {
+    height: clamp(160px, 40vw, 224px);
+  }
+
+  .sheet-row.cells {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(7.2rem, 1fr));
+    gap: 0.7rem;
+  }
+  .cell {
+    background: #f3f0e2;
+    border: 3px solid #4a382a;
+    border-radius: 14px;
+    padding: 0.8rem 0.5rem 0.6rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  .cell img {
+    height: 108px;
+    max-width: 100%;
+    object-fit: contain;
+  }
+  .costume .cell img {
+    height: 96px;
+  }
+  .expr {
+    position: relative;
+    display: block;
+    width: fit-content;
+    margin: 0 auto;
+  }
+  .expr svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .closeups {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    gap: 0.7rem;
+  }
+  .closeup {
+    background: #f3f0e2;
+    border: 3px solid #4a382a;
+    border-radius: 16px;
+    padding: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+    text-align: left;
+  }
+  .closeup img {
+    height: 128px;
+    flex-shrink: 0;
+  }
+  .closeup figcaption {
+    font-weight: 400;
+    font-size: 0.82rem;
+    margin-top: 0;
+  }
+  .closeup strong {
+    display: block;
+    font-size: 0.95rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .palette {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(8.4rem, 1fr));
+    gap: 0.6rem;
+  }
+  .palette li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
+    column-gap: 0.55rem;
+    align-items: center;
+    font-size: 0.75rem;
+  }
+  .swatch {
+    grid-row: 1 / 3;
+    width: 2.1rem;
+    height: 2.1rem;
+    border-radius: 8px;
+    border: 2px solid #4a382a;
+  }
+  .pname {
+    font-weight: 700;
+  }
+  .phex {
+    color: #8a7561;
+    font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  }
+
+  .usage {
+    margin: 0;
+    padding-left: 1.4rem;
+    font-size: 0.88rem;
+  }
+  .usage li {
+    margin: 0.3rem 0;
+  }
+
+  .sheet-credit {
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-align: right;
+    margin: 0.5rem 0 0;
+  }
+
+  @media (max-width: 30rem) {
+    .sheet {
+      padding: 1.1rem 0.9rem 1.3rem;
+    }
+    .closeup {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+</style>
