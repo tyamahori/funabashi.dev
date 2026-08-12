@@ -42,9 +42,23 @@ async function fetchAll(): Promise<ConnpassEvent[]> {
   // 範囲外のページ番号でもconnpassは同じ一覧を返すため、既知イベントだけのページで打ち切る
   const seen = new Map<string, ConnpassEvent>();
   for (let page = 1; page <= 5; page++) {
-    const res = await fetch(`${LIST_URL}?page=${page}`, { headers: HEADERS });
-    if (!res.ok) throw new Error(`connpass HTTP ${res.status}`);
-    const found = parse(await res.text());
+    let found: ConnpassEvent[];
+    try {
+      // CFビルド環境はconnpass遮断が既知(2026-08-01実測)。遮断がRSTでなくブラックホールの
+      // 場合にページごと最大10秒で諦める(タイムアウトなしだとビルドが長時間停滞する)
+      const res = await fetch(`${LIST_URL}?page=${page}`, {
+        headers: HEADERS,
+        signal: AbortSignal.timeout(10_000),
+      });
+      if (!res.ok) throw new Error(`connpass HTTP ${res.status}`);
+      found = parse(await res.text());
+    } catch (err) {
+      // page1から失敗なら従来どおりthrow→フォールバック。後続ページの失敗は
+      // 取得済みライブデータを捨てず、そこまでの結果で続行する(鮮度優先)
+      if (seen.size === 0) throw err;
+      console.warn(`connpass: page ${page} fetch failed (${err}); using ${seen.size} events fetched so far`);
+      break;
+    }
     const fresh = found.filter((e) => !seen.has(e.url));
     if (fresh.length === 0) break;
     fresh.forEach((e) => seen.set(e.url, e));
