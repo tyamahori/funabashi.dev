@@ -1,0 +1,26 @@
+# Funabashi.dev
+
+> 船橋市を中心としたIT/Web系開発者コミュニティ、通称「ふなでぶ」。2021年11月発足、生活圏でつながる地域コミュニティとして、勉強会・懇親会とDiscordでの日常的な交流を続けています。
+
+- 呼称: ふなでぶ / ふなデブ / フナデブ
+- 参加: 船橋在住でなくても、交流の意思のある方ならどなたでも歓迎
+- 運営: 合同会社ひがふな (https://higafuna.jp)
+
+## ページ
+
+- [Funabashi.dev とは](https://funabashi.dev/about): 発足の経緯、活動方針、マスコット・ふなデブくん誕生の背景
+- [参加する](https://funabashi.dev/join): connpassイベントとDiscordの2つの入口、Discordの歩き方、よくある質問
+- [イベント](https://funabashi.dev/events): 船橋市内を主会場にした勉強会・懇親会の次回案内と開催実績
+- [活動紹介](https://funabashi.dev/activities): 技術チャンネルから麻雀部・ボルダリング部・金融ゼミ・グルメ部までのチャンネル文化
+- [ふなデブくん](https://funabashi.dev/funadebu): 公式マスコット・梨の妖精ふなデブくんの紹介とキャラクターシート
+- [ふなデブくん新聞部](https://funabashi.dev/news): Discordの話題・船橋ローカル・テックの記事一覧(ふなデブくんの一言つき)
+
+## 外部リンク
+
+- [connpass](https://funabashidev.connpass.com): イベントの参加申込
+- [Discord招待](https://discord.gg/BhK2tpqQmn): コミュニティへの参加
+
+## Optional
+
+- [RSS](https://funabashi.dev/rss.xml): 新聞部記事の更新フィード
+- [サイトマップ](https://funabashi.dev/sitemap-index.xml)
